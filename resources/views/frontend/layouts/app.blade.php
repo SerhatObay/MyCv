@@ -16,11 +16,11 @@
     <button class="btn btn-white btn-share ml-auto mr-3 ml-md-0 mr-md-auto"><img src="{{asset('assets/images/share.svg')}}" alt="share" class="btn-img">
         SHARE</button>
     <nav class="collapsible-nav" id="collapsible-nav">
-        <a href="index.html" class="nav-link active">HOME</a>
-        <a href="resume.html" class="nav-link">RESUME</a>
-        <a href="portfolio.html" class="nav-link">PORTFOLIO</a>
-        <a href="blog.html" class="nav-link">BLOG</a>
-        <a href="contact.html" class="nav-link">CONTACT</a>
+        <a href="{{route('index')}}" class="nav-link active">HOME</a>
+        <a href="{{route('resume')}}" class="nav-link">RESUME</a>
+        <a href="{{route('portfolio')}}" class="nav-link">PORTFOLIO</a>
+        <a href="{{route('blog')}}" class="nav-link">BLOG</a>
+        <a href="{{route('contact')}}" class="nav-link">CONTACT</a>
     </nav>
     <button class="btn btn-menu-toggle btn-white rounded-circle" data-toggle="collapsible-nav"
             data-target="collapsible-nav"><img src="{{asset('assets/images/hamburger.svg')}}" alt="hamburger"></button>
@@ -35,10 +35,9 @@
             <span class="badge badge-white badge-pill profile-designation">UI / UX Designer</span>
         </div>
         <nav class="social-links">
-            <a href="#!" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#!" class="social-link"><i class="fab fa-instagram"></i></a>
             <a href="#!" class="social-link"><i class="fab fa-twitter"></i></a>
-            <a href="#!" class="social-link"><i class="fab fa-behance"></i></a>
-            <a href="#!" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="#!" class="social-link"><i class="fab fa-linkedin"></i></a>
             <a href="#!" class="social-link"><i class="fab fa-github"></i></a>
         </nav>
         <div class="widget">
