@@ -30,7 +30,7 @@
         <div class="profile-img-wrapper">
             <img src="{{asset('assets/images/Profile.png')}}" alt="profile">
         </div>
-        <h1 class="profile-name">Daisy Murphy</h1>
+        <h1 class="profile-name">Serhat Obay</h1>
         <div class="text-center">
             <span class="badge badge-white badge-pill profile-designation">UI / UX Designer</span>
         </div>
