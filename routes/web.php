@@ -22,6 +22,7 @@ Route::get('/contact',[\App\Http\Controllers\FrontController::class,'contact'])-
 //Back Controller
 Route::prefix('admin')->middleware('auth')->group(function (){
     Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin.index');
+    Route::get('/education',[\App\Http\Controllers\EducationController::class,'index'])->name('admin.education');
 });
 
 
