@@ -23,8 +23,8 @@
     <!-- partial:../../partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-            <a class="sidebar-brand brand-logo" href="../../index.html"><img src="{{asset('back/assets/images/logo.svg')}}" alt="logo" /></a>
-            <a class="sidebar-brand brand-logo-mini" href="../../index.html"><img src="{{asset('back/assets/images/logo-mini.svg')}}" alt="logo" /></a>
+            <a class="sidebar-brand brand-logo" href="{{route('admin.index')}}"><img src="{{asset('back/assets/images/logo.svg')}}" alt="logo" /></a>
+            <a class="sidebar-brand brand-logo-mini" href="{{route('admin.index')}}"><img src="{{asset('back/assets/images/logo-mini.svg')}}" alt="logo" /></a>
         </div>
         <ul class="nav">
             <li class="nav-item profile">
@@ -80,28 +80,20 @@
                 <span class="nav-link">Navigation</span>
             </li>
             <li class="nav-item menu-items">
-                <a class="nav-link" href="../../index.html">
+                <a class="nav-link" href="{{route('admin.index')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
-                    <span class="menu-title">Dashboard</span>
+                    <span class="menu-title">Admin Panel</span>
                 </a>
             </li>
             <li class="nav-item menu-items">
-                <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <a class="nav-link" href="{{route('admin.education')}}">
               <span class="menu-icon">
-                <i class="mdi mdi-laptop"></i>
+                <i class="mdi mdi-playlist-play"></i>
               </span>
-                    <span class="menu-title">Basic UI Elements</span>
-                    <i class="menu-arrow"></i>
+                    <span class="menu-title">Eğitim Bilgileri</span>
                 </a>
-                <div class="collapse" id="ui-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a></li>
-                    </ul>
-                </div>
             </li>
             <li class="nav-item menu-items">
                 <a class="nav-link" href="../../pages/forms/basic_elements.html">
@@ -168,7 +160,7 @@
         <!-- partial:../../partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="{{asset('back/assets/images/logo-mini.svg')}}" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="{{route('admin.index')}}"><img src="{{asset('back/assets/images/logo-mini.svg')}}" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -361,8 +353,9 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
+                @yield('content')
             </div>
-            @yield('content')
+
             <!-- content-wrapper ends -->
             <!-- partial:../../partials/_footer.html -->
             <footer class="footer">
