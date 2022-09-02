@@ -12,9 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Front Controller
+Route::get('/',[\App\Http\Controllers\FrontController::class,'index'])->name('index');
+Route::get('/resume',[\App\Http\Controllers\FrontController::class,'resume'])->name('resume');
+Route::get('/portfolio',[\App\Http\Controllers\FrontController::class,'portfolio'])->name('portfolio');
+Route::get('/blog',[\App\Http\Controllers\FrontController::class,'blog'])->name('blog');
+Route::get('/contact',[\App\Http\Controllers\FrontController::class,'contact'])->name('contact');
 
-Route::get('/', function () {return view('frontend.index');})->name('index');
-Route::get('/resume', function () {return view('frontend.resume');})->name('resume');
-Route::get('/portfolio', function () {return view('frontend.portfolio');})->name('portfolio');
-Route::get('/blog', function () {return view('frontend.blog');})->name('blog');
-Route::get('/contact', function () {return view('frontend.contact');})->name('contact');
+//Back Controller
+
+
+
+
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
