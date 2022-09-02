@@ -76,9 +76,9 @@
     </aside>
     @yield('content')
 </div>
-<script src="{{asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('assets/vendors/@popperjs/core/dist/umd/popper-base.min.js')}}"></script>
-<script src="{{asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/vendors/jquery/sweet-alert/jquery.min.js')}}"></script>
+<script src="{{asset('assets/vendors/@popperjs/core/sweet-alert/umd/popper-base.min.js')}}"></script>
+<script src="{{asset('assets/vendors/bootstrap/sweet-alert/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/live-resume.js')}}"></script>
 </body>
 

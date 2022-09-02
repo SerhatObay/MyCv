@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{asset('back/assets/css/style.css')}}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('back/assets/images/favicon.png')}}"/>
+    <link rel="stylesheet" href="{{asset('back/assets/sweet-alert/sweetalertt2.min.css')}}">
 </head>
 <body>
 <div class="container-scroller">
@@ -26,7 +27,7 @@
                 <div class="card col-lg-4 mx-auto">
                     <div class="card-body px-5 py-5">
                         <h3 class="card-title text-left mb-3">Login</h3>
-                        <form action="" method="POST" id="loginForm">
+                        <form action="{{route('login')}}" method="POST" id="loginForm">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -70,6 +71,7 @@
 <script src="{{asset('back/assets/js/misc.js')}}"></script>
 <script src="{{asset('back/assets/js/settings.js')}}"></script>
 <script src="{{asset('back/assets/js/todolist.js')}}"></script>
+<script src="{{asset('back/assets/sweet-alert/sweetalert2.all.js')}}"></script>
 <script>
     $('#btnlogin').click(function ()
     {
@@ -78,15 +80,34 @@
 
         if (email.trim() == '')
         {
-            alert('Email Adresi Yazın');
+
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Email Adresinizi Yazmalısınız!',
+                confirmButtonText:'Tamam',
+
+            });
         }
         else if (!emailControl(email))
         {
-            alert('Geçerli Bir Email Adresi Yazın')
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Geçerli BirEmail Adresi Yazmalısınız!',
+                confirmButtonText:'Tamam',
+
+            });
         }
         else if (password.trim() == '')
         {
-            alert('Parola Yazmalısınız');
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Parolanızı Yazmalısınız!',
+                confirmButtonText:'Tamam',
+
+            });
         }
         else {
             $('#loginForm').submit();
