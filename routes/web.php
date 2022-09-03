@@ -22,7 +22,11 @@ Route::get('/contact',[\App\Http\Controllers\FrontController::class,'contact'])-
 //Back Controller
 Route::prefix('admin')->middleware('auth')->group(function (){
     Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin.index');
-    Route::get('/education',[\App\Http\Controllers\EducationController::class,'index'])->name('admin.education');
+    Route::get('/education-list',[\App\Http\Controllers\EducationController::class,'list'])->name('admin.education.list');
+    Route::post('/education-changeStatus',[\App\Http\Controllers\EducationController::class,'changeStatus'])->name('admin.education.changeStatus');
+    Route::post('/education-delete',[\App\Http\Controllers\EducationController::class,'delete'])->name('admin.education.delete');
+    Route::get('/education-add',[\App\Http\Controllers\EducationController::class,'addShow'])->name('admin.education.add');
+    Route::post('/education-add',[\App\Http\Controllers\EducationController::class,'add']);
 });
 
 

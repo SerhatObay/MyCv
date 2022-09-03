@@ -4,10 +4,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <meta name="csrf-token" content="{{csrf_token()}}">
+    <title>@yield('title')</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{asset('back/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('back/assets/vendors/css/vendor.bundle.base.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendors/@fortawesome/fontawesome-free/css/all.css')}}">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End Plugin css for this page -->
@@ -15,6 +17,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('back/assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('back/assets/sweet-alert/sweetalertt2.min.css')}}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('back/assets/images/favicon.png')}}" />
 </head>
@@ -88,7 +91,7 @@
                 </a>
             </li>
             <li class="nav-item menu-items">
-                <a class="nav-link" href="{{route('admin.education')}}">
+                <a class="nav-link" href="{{route('admin.education.list')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
@@ -380,8 +383,165 @@
 <script src="{{asset('back/assets/js/off-canvas.js')}}"></script>
 <script src="{{asset('back/assets/js/hoverable-collapse.js')}}"></script>
 <script src="{{asset('back/assets/js/misc.js')}}"></script>
-<script src="{{asset('back/assets/js/settings.j')}}s"></script>
+<script src="{{asset('back/assets/js/settings.js')}}"></script>
 <script src="{{asset('back/assets/js/todolist.js')}}"></script>
+<script src="{{asset('back/assets/sweet-alert/sweetalert2.all.js')}}"></script>
+<script>
+
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr("content")
+        }
+    });
+
+    $('.changeStatus').click(function ()
+    {
+        //let educationID = $(this).data('id');
+        let educationID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+        let self=$(this);
+        $.ajax({
+            url:"{{route('admin.education.changeStatus')}}",
+            // method:"POST"
+            type:"POST",
+            async:false,
+            data : {
+                educationID:educationID
+            },
+            success:function (response)
+            {
+                console.log(response)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: response.educationID+" ID'li kayıt durumu "+response.newStatus+" olarak güncellenmiştir",
+                    confirmButtonText:"Tamam",
+
+                });
+
+                if (response.status==1)
+                {
+                    self[0].innerHTML="Aktif";
+                    self.removeClass("btn-danger");
+                    self.addClass("btn-success");
+                }
+                else if(response.status==0)
+                {
+                    self[0].innerHTML="Pasif";
+                    self.remove("btn-success");
+                    self.addClass("btn-danger");
+                }
+
+            },
+            error:function ()
+            {
+
+            }
+        });
+
+
+
+    });
+
+    $('.deleteEducation').click(function () {
+        //let educationID = $(this).data('id');
+        let educationID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+
+        Swal.fire({
+            title: educationID+"Emin Misiniz",
+            text: educationID+" ID'li Eğitim Bilgisini Silmek İstiyor musunuz?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet',
+            cancelButtonText: "Hayır",
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{route('admin.education.delete')}}",
+                    // method:"POST"
+                    type:"POST",
+                    async:false,
+                    data : {
+                        educationID:educationID
+                    },
+                    success:function (response)
+                    {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text:  "Silme İşlemi Başarılı",
+                            confirmButtonText:"Tamam",
+
+                        });
+                        $("tr#"+educationID).remove();
+
+
+
+                    },
+                    error:function ()
+                    {
+
+                    }
+                });
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+            }
+        })
+
+
+    });
+
+</script>
+
+@include('sweetalert::alert')
+<script>
+    let createButton =$("#createButton");
+    createButton.click(function (){
+
+        $('#createEducationForm').submit();
+
+        if($('#education_date').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Lütfen Eğitim Tarihini Kontrol Edin!',
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else if($('#university_name').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Lütfen Üniversite Adınızı Kontrol Edin!',
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else if($('#university_branch').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Lütfen Üniversite Bölümünüzü Kontrol Edin!',
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else
+        {
+            $('#createEducationForm').submit();
+        }
+    });
+</script>
 <!-- endinject -->
 <!-- Custom js for this page -->
 <!-- End custom js for this page -->
