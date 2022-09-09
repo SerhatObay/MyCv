@@ -1,77 +1,44 @@
 @extends('frontend.layouts.app')
+@section('title')
+    AnaSayfa
+@endsection
 @section('content')
     <main>
         <section class="intro-section">
-            <h2 class="section-title">Hello, Daisy Murphy!</h2>
-            <p>I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print
-                media. I enjoy turning complex problems into simple, beautiful and intuitive designs. My job is to
-                build your website so that it is functional and user-friendly but at the same time attractive.
-                Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use.
-                My aim is to bring across your message and identity in the most creative way. I created web design
-                for many famous brand companies.</p>
-            <a href="#!" class="btn btn-primary btn-hire-me">HIRE ME</a>
+            <h2 class="section-title">{{$personal->main_title}}</h2>
+            <p>{!! $personal->about_text !!}</p>
+            <a href="{{$personal->btn_contact_link ? $personal->btn_contact_link : 'javascript:void(0)'}}" class="btn btn-primary btn-hire-me">{{$personal->btn_contact_text}}</a>
         </section>
         <section class="resume-section">
             <div class="row">
                 <div class="col-lg-6">
-                    <h6 class="section-subtitle">RESUME</h6>
-                    <h2 class="section-title">EDUCATION</h2>
+                    <h6 class="section-subtitle">{{$personal->small_title_left}}</h6>
+                    <h2 class="section-title">{{$personal->title_left}}</h2>
                     <ul class="time-line">
+                        @foreach($educationList as $education)
                         <li class="time-line-item">
-                            <span class="badge badge-primary">1998 - 2005</span>
-                            <h6 class="time-line-item-title">Master In Computer Science</h6>
-                            <p class="time-line-item-subtitle">MASTER, UNIVERSITY</p>
-                            <p class="time-line-item-content">Mauris magna sapien, pharetra consectetur fringilla
-                                vitae, interdum sed tortor.</p>
+                            <span class="badge badge-primary">{{$education->education_date}}</span>
+                            <h6 class="time-line-item-title">{{$education->university_name}}</h6>
+                            <p class="time-line-item-subtitle">{{$education->university_branch}}</p>
+                            <p class="time-line-item-content">{{$education->description}}</p>
                         </li>
-                        <li class="time-line-item">
-                            <span class="badge badge-primary">1995 - 1998</span>
-                            <h6 class="time-line-item-title">Studied at Harvard University</h6>
-                            <p class="time-line-item-subtitle">UNIVERSITY</p>
-                            <p class="time-line-item-content">Mauris magna sapien, pharetra consectetur fringilla
-                                vitae, interdum sed tortor.
-                            </p>
-                        </li>
-                        <li class="time-line-item">
-                            <span class="badge badge-primary">1993 - 1995</span>
-                            <h6 class="time-line-item-title">Studied at Oxford University</h6>
-                            <p class="time-line-item-subtitle">UNIVERSITY</p>
-                            <p class="time-line-item-content">Mauris magna sapien, pharetra consectetur fringilla
-                                vitae, interdum sed tortor.
-                            </p>
-                        </li>
+                        @endforeach
+
                     </ul>
                 </div>
                 <div class="col-lg-6">
-                    <h6 class="section-subtitle">RESUME</h6>
-                    <h2 class="section-title">Experience</h2>
+                    <h6 class="section-subtitle">{{$personal->small_title_right}}</h6>
+                    <h2 class="section-title">{{$personal->title_right}}</h2>
                     <ul class="time-line">
+                        @foreach($experienceList as $experience)
                         <li class="time-line-item">
-                            <span class="badge badge-primary">2010 - 2014</span>
-                            <h6 class="time-line-item-title">UI/UX Designer</h6>
-                            <p class="time-line-item-subtitle">Web Agency</p>
-                            <p class="time-line-item-content">Mauris magna sapien, pharetra consectetur fringilla
-                                vitae, interdum sed
-                                tortor.</p>
+                            <span class="badge badge-primary">{{$experience->date}}</span>
+                            <h6 class="time-line-item-title">{{$experience->task_name}}</h6>
+                            <p class="time-line-item-subtitle">{{$experience->company_name}}</p>
+                            <p class="time-line-item-content">{{$experience->description}}</p>
                         </li>
-                        <li class="time-line-item">
-                            <span class="badge badge-primary">2008 - 2010</span>
-                            <h6 class="time-line-item-title">Web Designer</h6>
-                            <p class="time-line-item-subtitle">Apple Inc.</p>
-                            <p class="time-line-item-content">Mauris magna sapien, pharetra consectetur fringilla
-                                vitae, interdum sed
-                                tortor.
-                            </p>
-                        </li>
-                        <li class="time-line-item">
-                            <span class="badge badge-primary">2006 - 2008</span>
-                            <h6 class="time-line-item-title">Graphic Designer</h6>
-                            <p class="time-line-item-subtitle">Apple Inc.</p>
-                            <p class="time-line-item-content">Mauris magna sapien, pharetra consectetur fringilla
-                                vitae, interdum sed
-                                tortor.
-                            </p>
-                        </li>
+                        @endforeach
+
                     </ul>
                 </div>
             </div>

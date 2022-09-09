@@ -18,6 +18,8 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('back/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('back/assets/sweet-alert/sweetalertt2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('back/assets/ckeditor/samples/css/samples.css')}}">
+    <link rel="stylesheet" href="{{asset('back/assets/ckeditor/toolbarconfigurator/lib/codemirror/neo.css')}}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('back/assets/images/favicon.png')}}" />
 </head>
@@ -38,7 +40,7 @@
                             <span class="count bg-success"></span>
                         </div>
                         <div class="profile-name">
-                            <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
+                            <h5 class="mb-0 font-weight-normal">{{auth()->user()->name}}</h5>
                             <span>Gold Member</span>
                         </div>
                     </div>
@@ -82,7 +84,7 @@
             <li class="nav-item nav-category">
                 <span class="nav-link">Navigation</span>
             </li>
-            <li class="nav-item menu-items">
+            <li class="nav-item menu-items {{Route::is('admin.index') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('admin.index')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
@@ -90,72 +92,49 @@
                     <span class="menu-title">Admin Panel</span>
                 </a>
             </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" href="{{route('admin.education.list')}}">
+            <li class="nav-item menu-items {{Route::is('admin.education.list') ? 'active' : ''}}">
+                <a class="nav-link " href="{{route('admin.education.list')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
                     <span class="menu-title">Eğitim Bilgileri</span>
                 </a>
             </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" href="../../pages/forms/basic_elements.html">
+            <li class="nav-item menu-items {{Route::is('admin.experience.list') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('admin.experience.list')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
-                    <span class="menu-title">Form Elements</span>
+                    <span class="menu-title">İş Tecrübeleri</span>
                 </a>
             </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" href="../../pages/tables/basic-table.html">
+            <li class="nav-item menu-items {{Route::is('personalInformation.index') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('personalInformation.index')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-table-large"></i>
               </span>
-                    <span class="menu-title">Tables</span>
+                    <span class="menu-title">Kişisel Bilgiler</span>
                 </a>
             </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" href="../../pages/charts/chartjs.html">
+
+            <li class="nav-item menu-items {{Route::is('admin.socialMedia.list') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('admin.socialMedia.list')}}">
               <span class="menu-icon">
-                <i class="mdi mdi-chart-bar"></i>
+                <i class="mdi mdi-table-large"></i>
               </span>
-                    <span class="menu-title">Charts</span>
+                    <span class="menu-title">Sosyal Medya Bilgileri</span>
                 </a>
             </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" href="../../pages/icons/mdi.html">
+
+            <li class="nav-item menu-items {{Route::is('admin.socialMedia.list') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('admin.socialMedia.list')}}">
               <span class="menu-icon">
-                <i class="mdi mdi-contacts"></i>
+                <i class="mdi mdi-table-large"></i>
               </span>
-                    <span class="menu-title">Icons</span>
+                    <span class="menu-title">Portfolio Bilgileri</span>
                 </a>
             </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-                    <span class="menu-title">User Pages</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="auth">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/samples/blank-page.html"> Blank Page </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-404.html"> 404 </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-500.html"> 500 </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register </a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-                    <span class="menu-title">Documentation</span>
-                </a>
-            </li>
+
         </ul>
     </nav>
     <!-- partial -->
@@ -315,7 +294,7 @@
                         <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                             <div class="navbar-profile">
                                 <img class="img-xs rounded-circle" src="{{asset('back/assets/images/faces/face15.jpg')}}" alt="">
-                                <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{auth()->user()->name}}</p>
                                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                             </div>
                         </a>
@@ -386,6 +365,10 @@
 <script src="{{asset('back/assets/js/settings.js')}}"></script>
 <script src="{{asset('back/assets/js/todolist.js')}}"></script>
 <script src="{{asset('back/assets/sweet-alert/sweetalert2.all.js')}}"></script>
+<script src="{{asset('back/assets/ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('back/assets/ckeditor/samples/js/sample.js')}}"></script>
+
+<!-- Education Scripts -->
 <script>
 
     $.ajaxSetup({
@@ -542,6 +525,445 @@
         }
     });
 </script>
+
+<!-- Experience Scripts -->
+
+<script>
+
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr("content")
+        }
+    });
+
+    $('.changeExperienceStatus').click(function ()
+    {
+        //let educationID = $(this).data('id');
+        let experienceID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+        let self=$(this);
+        $.ajax({
+            url:"{{route('admin.experience.changeStatus')}}",
+            // method:"POST"
+            type:"POST",
+            async:false,
+            data : {
+                experienceID:experienceID
+            },
+            success:function (response)
+            {
+                console.log(response)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: response.experienceID+" ID'li kayıt durumu "+response.newStatus+" olarak güncellenmiştir",
+                    confirmButtonText:"Tamam",
+
+                });
+
+                if (response.status==1)
+                {
+                    self[0].innerHTML="Aktif";
+                    self.removeClass("btn-danger");
+                    self.addClass("btn-success");
+                }
+                else if(response.status==0)
+                {
+                    self[0].innerHTML="Pasif";
+                    self.remove("btn-success");
+                    self.addClass("btn-danger");
+                }
+
+
+            },
+            error:function ()
+            {
+
+            }
+        });
+
+
+
+    });
+
+    $('.changeActive').click(function ()
+    {
+        //let educationID = $(this).data('id');
+        let experienceID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+        let self=$(this);
+        $.ajax({
+            url:"{{route('admin.experience.changeActive')}}",
+            // method:"POST"
+            type:"POST",
+            async:false,
+            data : {
+                experienceID:experienceID
+            },
+            success:function (response)
+            {
+                console.log(response)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: response.experienceID+" ID'li kayıt aktif durumu "+response.newStatus+" olarak güncellenmiştir",
+                    confirmButtonText:"Tamam",
+
+                });
+
+                if (response.active==1)
+                {
+                    self[0].innerHTML="Aktif";
+                    self.removeClass("btn-danger");
+                    self.addClass("btn-success");
+                }
+                else if(response.active==0)
+                {
+                    self[0].innerHTML="Pasif";
+                    self.remove("btn-success");
+                    self.addClass("btn-danger");
+                }
+
+
+            },
+            error:function ()
+            {
+
+            }
+        });
+
+
+
+    });
+
+    $('.deleteExperience').click(function () {
+        //let experienceID = $(this).data('id');
+        let experienceID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+
+        Swal.fire({
+            title: experienceID+"Emin Misiniz",
+            text: experienceID+" ID'li Deneyim Bilgisini Silmek İstiyor musunuz?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet',
+            cancelButtonText: "Hayır",
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{route('admin.experience.delete')}}",
+                    // method:"POST"
+                    type:"POST",
+                    async:false,
+                    data : {
+                        experienceID:experienceID
+                    },
+                    success:function (response)
+                    {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text:  "Silme İşlemi Başarılı",
+                            confirmButtonText:"Tamam",
+
+                        });
+                        $("tr#"+experienceID).remove();
+
+
+
+                    },
+                    error:function ()
+                    {
+
+                    }
+                });
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+            }
+        })
+
+
+    });
+
+</script>
+<script>
+    let createButton =$("#createExperienceButton");
+    createButton.click(function (){
+
+        $('#createExperienceForm').submit();
+
+        if($('#date').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Lütfen Deneyim Tarihini Kontrol Edin!',
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else if($('#task_name').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Lütfen Pozisyonunuzu Kontrol Edin!',
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else if($('#company_name').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Lütfen Şirket Adınızı Kontrol Edin!',
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else
+        {
+            $('#createExperienceForm').submit();
+        }
+    });
+</script>
+
+<!-- PersonalInformation Scripts -->
+
+<script>
+    var editor1 =CKEDITOR.replace('editor1',{
+        extraAllowedContent: 'div',
+        height:150
+    });
+
+    var editorLang =CKEDITOR.replace('editorLang',{
+        extraAllowedContent: 'div',
+        height:150
+    });
+
+    var editorInterests =CKEDITOR.replace('editorInterests',{
+        extraAllowedContent: 'div',
+        height:150
+    });
+</script>
+
+<!-- Social Media Scripts -->
+
+<script>
+
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr("content")
+        }
+    });
+
+    $('.changeSocialMediaStatus').click(function ()
+    {
+        //let socialMediaID = $(this).data('id');
+        let socialMediaID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+        let self=$(this);
+        $.ajax({
+            url:"{{route('admin.socialMedia.changeStatus')}}",
+            // method:"POST"
+            type:"POST",
+            async:false,
+            data : {
+                socialMediaID:socialMediaID
+            },
+            success:function (response)
+            {
+                console.log(response)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: response.socialMediaID+" ID'li kayıt durumu "+response.newStatus+" olarak güncellenmiştir",
+                    confirmButtonText:"Tamam",
+
+                });
+
+                if (response.status==1)
+                {
+                    self[0].innerHTML="Aktif";
+                    self.removeClass("btn-danger");
+                    self.addClass("btn-success");
+                }
+                else if(response.status==0)
+                {
+                    self[0].innerHTML="Pasif";
+                    self.remove("btn-success");
+                    self.addClass("btn-danger");
+                }
+
+            },
+            error:function ()
+            {
+
+            }
+        });
+
+
+
+    });
+
+
+    $('.deleteSocialMedia').click(function () {
+        //let educationID = $(this).data('id');
+        let socialMediaID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+
+        Swal.fire({
+            title: socialMediaID+"Emin Misiniz",
+            text: socialMediaID+" ID'li Sosyal Medya Bilgisini Silmek İstiyor musunuz?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet',
+            cancelButtonText: "Hayır",
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{route('admin.socialMedia.delete')}}",
+                    // method:"POST"
+                    type:"POST",
+                    async:false,
+                    data : {
+                        socialMediaID:socialMediaID
+                    },
+                    success:function (response)
+                    {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text:  "Silme İşlemi Başarılı",
+                            confirmButtonText:"Tamam",
+
+                        });
+                        $("tr#"+socialMediaID).remove();
+
+
+
+                    },
+                    error:function ()
+                    {
+
+                    }
+                });
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+            }
+        })
+
+
+    });
+</script>
+
+<!-- Portfolio Scripts -->
+
+<script>
+    var aboutCk =CKEDITOR.replace('aboutCk',{
+        extraAllowedContent: 'div',
+        height:150
+    });
+
+    $('#images').change(function ()
+    {
+        let images = $(this);
+        let imagesCheckStatus =imageCheck(images);
+    });
+
+    function imageCheck(images)
+    {
+        let length =images[0].files.length;
+        let files = images[0].files;
+        let checkImage=['png','jpg','jpeg'];
+        for (let i=0;i<length;i++)
+        {
+            let type =files[i].type.split('/').pop();
+            let size =files[i].size;
+            if ($.inArray(type,checkImage)=='-1')
+            {
+                console.log(files[i]);
+                console.log(files);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Uyarı',
+                    text: "Yüklemek İstediğiniz Dosya Belirlenen Formatlarda Değildir",
+                    confirmButtonText:"Tamam",
+
+                });
+                return false;
+
+
+            }
+            if (size>2048000)
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Uyarı',
+                    text: "Yüklemek İstediğiniz Dosya 2Mb'den  Fazladır",
+                    confirmButtonText:"Tamam",
+
+                });
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    $('#createPortfolioButton').click(function ()
+    {
+        let imageCheckStatus =imageCheck($('#images'));
+        if (!imageCheckStatus)
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı',
+                text: "Seçtiğiniz Resimleri Kontrol Ediniz",
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else if ($('#title').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı',
+                text: "Başlık Boş Bırakılamaz",
+                confirmButtonText:"Tamam",
+
+            });
+        }
+
+        else if ($('#tags').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı',
+                text: "Etiket Boş Bırakılamaz",
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else
+        {
+            $('#PortfolioForm').submit();
+        }
+    });
+
+</script>
+
+
 <!-- endinject -->
 <!-- Custom js for this page -->
 <!-- End custom js for this page -->

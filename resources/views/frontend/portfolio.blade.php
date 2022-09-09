@@ -1,4 +1,7 @@
 @extends('frontend.layouts.app')
+@section('title')
+    Projeler
+@endsection
 @section('content')
     <main>
         <section class="portfolio-section">

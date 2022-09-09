@@ -1,4 +1,7 @@
 @extends('frontend.layouts.app')
+@section('title')
+    İletişim
+@endsection
 @section('content')
     <main>
         <section class="contact-section">

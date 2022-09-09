@@ -2,16 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 //Front Controller
 Route::get('/',[\App\Http\Controllers\FrontController::class,'index'])->name('index');
 Route::get('/resume',[\App\Http\Controllers\FrontController::class,'resume'])->name('resume');
@@ -22,11 +13,38 @@ Route::get('/contact',[\App\Http\Controllers\FrontController::class,'contact'])-
 //Back Controller
 Route::prefix('admin')->middleware('auth')->group(function (){
     Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin.index');
-    Route::get('/education-list',[\App\Http\Controllers\EducationController::class,'list'])->name('admin.education.list');
-    Route::post('/education-changeStatus',[\App\Http\Controllers\EducationController::class,'changeStatus'])->name('admin.education.changeStatus');
-    Route::post('/education-delete',[\App\Http\Controllers\EducationController::class,'delete'])->name('admin.education.delete');
-    Route::get('/education-add',[\App\Http\Controllers\EducationController::class,'addShow'])->name('admin.education.add');
-    Route::post('/education-add',[\App\Http\Controllers\EducationController::class,'add']);
+    Route::prefix('/education')->group(function (){
+        Route::get('/list',[\App\Http\Controllers\EducationController::class,'list'])->name('admin.education.list');
+        Route::post('/changeStatus',[\App\Http\Controllers\EducationController::class,'changeStatus'])->name('admin.education.changeStatus');
+        Route::post('/delete',[\App\Http\Controllers\EducationController::class,'delete'])->name('admin.education.delete');
+        Route::get('/add',[\App\Http\Controllers\EducationController::class,'addShow'])->name('admin.education.add');
+        Route::post('/add',[\App\Http\Controllers\EducationController::class,'add']);
+
+    });
+
+    Route::prefix('/experience')->group(function (){
+        Route::get('/list',[\App\Http\Controllers\ExperienceController::class,'list'])->name('admin.experience.list');
+        Route::post('/changeStatus',[\App\Http\Controllers\ExperienceController::class,'changeStatus'])->name('admin.experience.changeStatus');
+        Route::post('/changeActive',[\App\Http\Controllers\ExperienceController::class,'changeActive'])->name('admin.experience.changeActive');
+        Route::post('/delete',[\App\Http\Controllers\ExperienceController::class,'delete'])->name('admin.experience.delete');
+        Route::get('/add',[\App\Http\Controllers\ExperienceController::class,'addShow'])->name('admin.experience.add');
+        Route::post('/add',[\App\Http\Controllers\ExperienceController::class,'add']);
+    });
+
+
+    Route::get('personal-information',[\App\Http\Controllers\PersonalInformationController::class,'index'])->name('personalInformation.index');
+    Route::post('personal-information',[\App\Http\Controllers\PersonalInformationController::class,'update']);
+
+    Route::prefix('social-media')->group(function (){
+        Route::get('/list',[\App\Http\Controllers\SocialMediaController::class,'list'])->name('admin.socialMedia.list');
+        Route::post('/changeStatus',[\App\Http\Controllers\SocialMediaController::class,'changeStatus'])->name('admin.socialMedia.changeStatus');
+        Route::post('/delete',[\App\Http\Controllers\SocialMediaController::class,'delete'])->name('admin.socialMedia.delete');
+        Route::get('/add',[\App\Http\Controllers\SocialMediaController::class,'addShow'])->name('admin.socialMedia.add');
+        Route::post('/add',[\App\Http\Controllers\SocialMediaController::class,'add']);
+    });
+
+    Route::resource('portfolio','PortfolioController');
+
 });
 
 
