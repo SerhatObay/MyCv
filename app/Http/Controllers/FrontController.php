@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\Messages;
 use App\Models\PersonalInformation;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
@@ -41,5 +42,19 @@ class FrontController extends Controller
     }
     public function contact(){
         return view('frontend.contact');
+    }
+    public function sendMessage(Request $request)
+    {
+        $message=new Messages;
+        $message->name=$request->name;
+        $message->mail=$request->mail;
+        $message->message=$request->message;
+        $message->save();
+
+        alert()->success('Başarılı','Mesajnız Gönderildi')->showConfirmButton('Tamam','#3885d6')->persistent(true,true);
+        return redirect()->route('contact');
+
+
+
     }
 }

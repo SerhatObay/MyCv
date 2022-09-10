@@ -9,6 +9,7 @@ Route::get('/resume',[\App\Http\Controllers\FrontController::class,'resume'])->n
 Route::get('/portfolio',[\App\Http\Controllers\FrontController::class,'portfolio'])->name('portfolio');
 Route::get('/blog',[\App\Http\Controllers\FrontController::class,'blog'])->name('blog');
 Route::get('/contact',[\App\Http\Controllers\FrontController::class,'contact'])->name('contact');
+Route::post('/contact',[\App\Http\Controllers\FrontController::class,'sendMessage'])->name('sendMessage');
 
 //Back Controller
 Route::prefix('admin')->middleware('auth')->group(function (){
@@ -43,7 +44,11 @@ Route::prefix('admin')->middleware('auth')->group(function (){
         Route::post('/add',[\App\Http\Controllers\SocialMediaController::class,'add']);
     });
 
-    Route::resource('portfolio','PortfolioController');
+    Route::prefix('messages')->group(function (){
+        Route::get('/list',[\App\Http\Controllers\MessagesController::class,'list'])->name('admin.messages.list');
+        Route::post('/changeRead',[\App\Http\Controllers\MessagesController::class,'changeRead'])->name('admin.messages.changeRead');
+        Route::post('/delete',[\App\Http\Controllers\MessagesController::class,'delete'])->name('admin.messages.delete');
+    });
 
 });
 

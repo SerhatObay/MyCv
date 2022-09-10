@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Mukta:300,400,500,600,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/vendors/@fortawesome/fontawesome-free/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/live-resume.css')}}">
+    <link rel="stylesheet" href="{{asset('/assets/sweet-alert/sweetalertt2.min.css')}}">
 </head>
 
 <body>
@@ -18,7 +19,6 @@
     <nav class="collapsible-nav" id="collapsible-nav">
         <a href="{{route('index')}}" class="nav-link {{Route::is('index') ? 'active' : ''}}">HOME</a>
         <a href="{{route('resume')}}" class="nav-link {{Route::is('resume') ? 'active' : ''}}">RESUME</a>
-        <a href="{{route('portfolio')}}" class="nav-link {{Route::is('portfolio') ? 'active' : ''}}" >PORTFOLIO</a>
         <a href="{{route('blog')}}" class="nav-link {{Route::is('blog') ? 'active' : ''}}" >BLOG</a>
         <a href="{{route('contact')}}" class="nav-link {{Route::is('contact') ? 'active' : ''}}">CONTACT</a>
     </nav>
@@ -77,7 +77,71 @@
 <script src="{{asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{asset('assets/vendors/@popperjs/core/dist/umd/popper-base.min.js')}}"></script>
 <script src="{{asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/sweet-alert/sweetalert2.all.js')}}"></script>
 <script src="{{asset('assets/js/live-resume.js')}}"></script>
+@include('sweetalert::alert')
+
+<script>
+    $('#sendMessage').click(function ()
+    {
+        let name=document.querySelector('#name').value;
+        let mail=document.querySelector('#mail').value;
+        let message=document.querySelector('#message').value;
+
+        if (name.trim() == '')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'İsminizi Yazmalısınız!',
+                confirmButtonText:'Tamam',
+
+            });
+
+        }
+        else if (!emailControl(mail))
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Geçerli Bir Email Adresi Yazmalısınız!',
+                confirmButtonText:'Tamam',
+
+            });
+        }
+        else if (mail.trim() == '')
+        {
+
+
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Email Adresinizi Yazmalısınız!',
+                confirmButtonText:'Tamam',
+
+            });
+        }
+
+        else if (message.trim() == '')
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Uyarı...',
+                text: 'Mesajınızı Yazmalısınız!',
+                confirmButtonText:'Tamam',
+
+            });
+        }
+        else {
+
+            $('#sendMessageForm').submit();
+        }
+    });
+    function emailControl(mail){
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(mail);
+    }
+</script>
 </body>
 
 </html>

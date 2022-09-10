@@ -127,13 +127,15 @@
             </li>
 
             <li class="nav-item menu-items {{Route::is('admin.socialMedia.list') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('admin.socialMedia.list')}}">
+                <a class="nav-link" href="{{route('admin.messages.list')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-table-large"></i>
               </span>
-                    <span class="menu-title">Portfolio Bilgileri</span>
+                    <span class="menu-title">Gelen Mesajlar</span>
                 </a>
             </li>
+
+
 
         </ul>
     </nav>
@@ -157,7 +159,7 @@
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown d-none d-lg-block">
-                        <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
+                        <a class="nav-link btn btn-success " id="createbuttonDropdown" target="_blank"   href="{{route('index')}}" target="_blank">Siteye Git</a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
                             <h6 class="p-3 mb-0">Projects</h6>
                             <div class="dropdown-divider"></div>
@@ -867,101 +869,122 @@
     });
 </script>
 
-<!-- Portfolio Scripts -->
+<!-- Messages Scripts -->
 
 <script>
-    var aboutCk =CKEDITOR.replace('aboutCk',{
-        extraAllowedContent: 'div',
-        height:150
+
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr("content")
+        }
     });
 
-    $('#images').change(function ()
+    $('.changeRead').click(function ()
     {
-        let images = $(this);
-        let imagesCheckStatus =imageCheck(images);
-    });
-
-    function imageCheck(images)
-    {
-        let length =images[0].files.length;
-        let files = images[0].files;
-        let checkImage=['png','jpg','jpeg'];
-        for (let i=0;i<length;i++)
-        {
-            let type =files[i].type.split('/').pop();
-            let size =files[i].size;
-            if ($.inArray(type,checkImage)=='-1')
+        //let educationID = $(this).data('id');
+        let messageID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+        let self=$(this);
+        $.ajax({
+            url:"{{route('admin.messages.changeRead')}}",
+            // method:"POST"
+            type:"POST",
+            async:false,
+            data : {
+                messageID:messageID
+            },
+            success:function (response)
             {
-                console.log(files[i]);
-                console.log(files);
+                console.log(response)
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Uyarı',
-                    text: "Yüklemek İstediğiniz Dosya Belirlenen Formatlarda Değildir",
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: response.messageID+" ID'li kayıt durumu "+response.newStatus+" olarak güncellenmiştir",
                     confirmButtonText:"Tamam",
 
                 });
-                return false;
 
+                if (response.read==1)
+                {
+                    self[0].innerHTML="Okundu";
+                    self.removeClass("btn-danger");
+                    self.addClass("btn-success");
+                }
+                else if(response.read==0)
+                {
+                    self[0].innerHTML="Okunmadı";
+                    self.remove("btn-success");
+                    self.addClass("btn-danger");
+                }
 
-            }
-            if (size>2048000)
+            },
+            error:function ()
             {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Uyarı',
-                    text: "Yüklemek İstediğiniz Dosya 2Mb'den  Fazladır",
-                    confirmButtonText:"Tamam",
 
-                });
-                return false;
             }
-        }
-        return true;
+        });
 
-    }
 
-    $('#createPortfolioButton').click(function ()
-    {
-        let imageCheckStatus =imageCheck($('#images'));
-        if (!imageCheckStatus)
-        {
-            Swal.fire({
-                icon: 'error',
-                title: 'Uyarı',
-                text: "Seçtiğiniz Resimleri Kontrol Ediniz",
-                confirmButtonText:"Tamam",
 
-            });
-        }
-        else if ($('#title').val().trim()=='')
-        {
-            Swal.fire({
-                icon: 'error',
-                title: 'Uyarı',
-                text: "Başlık Boş Bırakılamaz",
-                confirmButtonText:"Tamam",
+    });
 
-            });
-        }
+    $('.deleteMessages').click(function () {
+        //let educationID = $(this).data('id');
+        let messageID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
 
-        else if ($('#tags').val().trim()=='')
-        {
-            Swal.fire({
-                icon: 'error',
-                title: 'Uyarı',
-                text: "Etiket Boş Bırakılamaz",
-                confirmButtonText:"Tamam",
+        Swal.fire({
+            title: messageID+"Emin Misiniz",
+            text: messageID+" ID'li Mesajı Silmek İstiyor musunuz?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet',
+            cancelButtonText: "Hayır",
+        }).then((result) => {
 
-            });
-        }
-        else
-        {
-            $('#PortfolioForm').submit();
-        }
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{route('admin.messages.delete')}}",
+                    // method:"POST"
+                    type:"POST",
+                    async:false,
+                    data : {
+                        messageID:messageID
+                    },
+                    success:function (response)
+                    {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text:  "Silme İşlemi Başarılı",
+                            confirmButtonText:"Tamam",
+
+                        });
+                        $("tr#"+messageID).remove();
+
+
+
+                    },
+                    error:function ()
+                    {
+
+                    }
+                });
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+            }
+        })
+
+
     });
 
 </script>
+
+
 
 
 <!-- endinject -->

@@ -110,6 +110,7 @@
             });
         }
         else {
+
             $('#loginForm').submit();
         }
     });
