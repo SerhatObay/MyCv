@@ -1,14 +1,21 @@
 @extends('backend.layouts.app')
 @section('title')
-    Mesajlar
+    Paylaşım Listesi
 @endsection
 @section('content')
+    <style>
+        .table th img, .jsgrid .jsgrid-table th img, .table td img, .jsgrid .jsgrid-table td img {
+            width: 100px;
+            height: unset !important;
+            border-radius: unset !important;
+        }
+    </style>
     <div class="page-header">
-        <h3 class="page-title">Gelen Mesajlar</h3>
+        <h3 class="page-title">Paylaşımlar</h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Admin Panel</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Gelen Mesajlar</li>
+                <li class="breadcrumb-item active" aria-current="page">Paylaşımlar</li>
             </ol>
         </nav>
     </div>
@@ -18,7 +25,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-4">
-
+                            <a href="{{route('admin.post.add')}}"class="btn btn-primary btn-block">Yeni Paylaşım Ekle</a>
                         </div>
                     </div>
                 </div>
@@ -29,29 +36,31 @@
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Düzenle</th>
                                 <th>Sil</th>
-                                <th>Mesajı Gönderen</th>
-                                <th>Email Adresi</th>
-                                <th>Mesaj</th>
+                                <th>Paylaşım Resmi</th>
+                                <th>Paylaşım Başlığı</th>
+                                <th>Makale Yazısı</th>
                                 <th>Status</th>
                                 <th>Eklenme Tarihi</th>
                                 <th>Güncellenme Tarihi</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($list as $item)
+                            @foreach($post as $item)
                                 <tr id="{{$item->id}}">
                                     <td>{{$item->id}}</td>
-                                    <td><a data-id="{{$item->id}}" href="javascript:void(0)" class="btn btn-danger deleteMessages">Sil <i class="fa fa-trash"></i></a></td>
+                                    <td><a  href="{{ route('admin.post.add',['postID'=>$item->id]) }}" class="btn btn-warning editPost">Düzenle <i class="fa fa-edit"></i></a></td>
+                                    <td><a data-id="{{$item->id}}" href="javascript:void(0)" class="btn btn-danger deletePost">Sil <i class="fa fa-trash"></i></a></td>
 
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->mail}}</td>
-                                    <td><a  title="Mesajı Okumak İçin tıklayınız"  style="color: #FFFFF0" href="{{route('admin.messages.detail' ,['id' => $item->id])}}">{{Str::limit($item->message,20)}}</a></td>
+                                    <td><img src="{{asset($item->image)}}" alt=""></td>
+                                    <td>{{$item->title}}</td>
+                                    <td>{!! Str::limit($item->description,50)  !!}</td>
                                     <td>
-                                        @if($item->read)
-                                            <a data-id="{{$item->id}}" href="javascript:void(0)"  class="btn btn-success changeRead" >Okundu</a>
+                                        @if($item->status)
+                                            <a data-id="{{$item->id}}" href="javascript:void(0)"  class="btn btn-success changePostStatus" >Aktif</a>
                                         @else
-                                            <a data-id="{{$item->id}}" href="javascript:void(0)" class="btn btn-danger changeRead" >Okunmadı</a>
+                                            <a data-id="{{$item->id}}" href="javascript:void(0)" class="btn btn-danger changePostStatus" >Pasif</a>
                                         @endif
 
                                     </td>

@@ -135,6 +135,15 @@
                 </a>
             </li>
 
+            <li class="nav-item menu-items {{Route::is('admin.post.list') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('admin.post.list')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+                    <span class="menu-title">Paylaşımlar</span>
+                </a>
+            </li>
+
 
 
         </ul>
@@ -961,6 +970,131 @@
 
 
     });
+
+</script>
+
+<!-- Post Scripts -->
+
+<script>
+
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr("content")
+        }
+    });
+
+
+    $('.changePostStatus').click(function ()
+    {
+        //let educationID = $(this).data('id');
+        let postID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+        let self=$(this);
+        $.ajax({
+            url:"{{route('admin.post.changeStatus')}}",
+            // method:"POST"
+            type:"POST",
+            async:false,
+            data : {
+                postID:postID
+            },
+            success:function (response)
+            {
+                console.log(response)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: response.postID+" ID'li kayıt durumu "+response.newStatus+" olarak güncellenmiştir",
+                    confirmButtonText:"Tamam",
+
+                });
+
+                if (response.status==1)
+                {
+                    self[0].innerHTML="Aktif";
+                    self.removeClass("btn-danger");
+                    self.addClass("btn-success");
+                }
+                else if(response.status==0)
+                {
+                    self[0].innerHTML="Pasif";
+                    self.remove("btn-success");
+                    self.addClass("btn-danger");
+                }
+
+            },
+            error:function ()
+            {
+
+            }
+        });
+
+
+
+    });
+
+    $('.deletePost').click(function () {
+        //let educationID = $(this).data('id');
+        let postID = $(this).attr('data-id');//Üstteki yöntemin başka bir formatı
+
+        Swal.fire({
+            title: postID+"Emin Misiniz",
+            text: postID+" ID'li Eğitim Bilgisini Silmek İstiyor musunuz?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet',
+            cancelButtonText: "Hayır",
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{route('admin.post.delete')}}",
+                    // method:"POST"
+                    type:"POST",
+                    async:false,
+                    data : {
+                        postID:postID
+                    },
+                    success:function (response)
+                    {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text:  "Silme İşlemi Başarılı",
+                            confirmButtonText:"Tamam",
+
+                        });
+                        $("tr#"+postID).remove();
+
+
+
+                    },
+                    error:function ()
+                    {
+
+                    }
+                });
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+            }
+        })
+
+
+    });
+
+    var description =CKEDITOR.replace('description',{
+        extraAllowedContent: 'div',
+        height:150
+    });
+
+
+
+
 
 </script>
 

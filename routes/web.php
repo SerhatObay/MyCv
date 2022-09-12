@@ -51,6 +51,14 @@ Route::prefix('admin')->middleware('auth')->group(function (){
         Route::post('/delete',[\App\Http\Controllers\MessagesController::class,'delete'])->name('admin.messages.delete');
     });
 
+    Route::prefix('post')->group(function (){
+        Route::get('/list',[\App\Http\Controllers\PostController::class,'list'])->name('admin.post.list');
+        Route::post('/changeStatus',[\App\Http\Controllers\PostController::class,'changeStatus'])->name('admin.post.changeStatus');
+        Route::post('/delete',[\App\Http\Controllers\PostController::class,'delete'])->name('admin.post.delete');
+        Route::get('/add',[\App\Http\Controllers\PostController::class,'addShow'])->name('admin.post.add');
+        Route::post('/add',[\App\Http\Controllers\PostController::class,'add']);
+    });
+
 });
 
 
