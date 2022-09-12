@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Education;
 use App\Models\Messages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class MessagesController extends Controller
 {
     public function list(){
-        $list=Messages::all();
+
+        $list=Messages::orderBy('created_at','Desc')->get();
         return view('backend.message_list',compact('list'));
     }
     public function changeRead(Request $request)
@@ -49,4 +52,10 @@ class MessagesController extends Controller
 
         return response()->json([],200);
     }
+    public function detail($id)
+    {
+        $message=Messages::find($id);
+        return view('backend.message_detail',compact('message'));
+    }
+
 }

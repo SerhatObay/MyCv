@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\Messages;
 use App\Models\PersonalInformation;
 use App\Models\SocialMedia;
 use Illuminate\Support\Facades\View;
@@ -28,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $messages=Messages::where('read',0)
+            ->orderBy('created_at','Desc')
+            ->get();
         $social =SocialMedia::where('status',1)->get();
         $personal=PersonalInformation::find(1);
         $educationList=Education::query()
@@ -45,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
         View::share('personal',$personal);
         View::share('experienceList',$experienceList);
         View::share('educationList',$educationList);
+        View::share('messages',$messages);
+
 
     }
 }

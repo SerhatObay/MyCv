@@ -46,7 +46,7 @@
 
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->mail}}</td>
-                                    <td>{{$item->message}}</td>
+                                    <td><a style="color: #FFFFF0" href="{{route('admin.messages.detail' ,['id' => $item->id])}}">{{$item->message}}</a></td>
                                     <td>
                                         @if($item->read)
                                             <a data-id="{{$item->id}}" href="javascript:void(0)"  class="btn btn-success changeRead" >Okundu</a>

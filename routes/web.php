@@ -46,6 +46,7 @@ Route::prefix('admin')->middleware('auth')->group(function (){
 
     Route::prefix('messages')->group(function (){
         Route::get('/list',[\App\Http\Controllers\MessagesController::class,'list'])->name('admin.messages.list');
+        Route::get('/detail/{id}',[\App\Http\Controllers\MessagesController::class,'detail'])->name('admin.messages.detail')->whereNumber('id');
         Route::post('/changeRead',[\App\Http\Controllers\MessagesController::class,'changeRead'])->name('admin.messages.changeRead');
         Route::post('/delete',[\App\Http\Controllers\MessagesController::class,'delete'])->name('admin.messages.delete');
     });
