@@ -70,6 +70,8 @@ class EducationController extends Controller
                 "university_branch"=>$request->university_branch,
                 "description"=>$request->description,
                 "status"=>$status
+
+
             ]);
             alert()->success('Başarılı','Eğitim Bilgileri Güncellendi')->showConfirmButton('Tamam','#3885d6')->persistent(true,true);
             return redirect()->route('admin.education.list');

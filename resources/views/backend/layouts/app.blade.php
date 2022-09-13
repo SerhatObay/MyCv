@@ -1038,7 +1038,7 @@
 
         Swal.fire({
             title: postID+"Emin Misiniz",
-            text: postID+" ID'li Eğitim Bilgisini Silmek İstiyor musunuz?",
+            text: postID+" ID'li Paylaşımı Silmek İstiyor musunuz?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

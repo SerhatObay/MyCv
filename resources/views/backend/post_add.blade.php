@@ -70,27 +70,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <div class="form-check form-check-success">
-                                <label class="form-check-label" for="status">
-                                        <?php
-                                        if ($post)
-                                        {
-                                            $checkedStatus=$post->status ? "checked" : '';
-                                        }
-                                        else
-                                        {
-                                            $checkedStatus='';
-                                        }
-                                        ?>
 
-                                    <input type="checkbox" name="status" id="status" class="form-check-input "{{$checkedStatus}} >
-                                    Paylaşım Gösterilme Durumu
-                                </label>
-
-
-                            </div>
-                        </div>
 
                         <button  id="createPostButton" type="submit" class="btn btn-primary me-2" id="createPostButton">Kaydet</button>
 

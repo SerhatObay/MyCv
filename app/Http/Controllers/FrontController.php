@@ -6,6 +6,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Messages;
 use App\Models\PersonalInformation;
+use App\Models\Post;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class FrontController extends Controller
             ->orderBy('date','ASC')
             ->get();
 
+
         $personal=PersonalInformation::find(1);
         $social=SocialMedia::where('status',1)->get();
 
@@ -34,15 +36,19 @@ class FrontController extends Controller
 
         return view('frontend.resume');
     }
-    public function portfolio(){
-        return view('frontend.portfolio');
-    }
     public function blog(){
-        return view('frontend.blog');
+        $postList=Post::query()
+            ->where('status',1)
+            //->where('status',1)
+
+            ->orderBy('created_at','ASC')
+            ->get();
+        return view('frontend.blog',compact('postList'));
     }
     public function contact(){
         return view('frontend.contact');
     }
+
     public function sendMessage(Request $request)
     {
         $message=new Messages;
@@ -56,5 +62,11 @@ class FrontController extends Controller
 
 
 
+    }
+
+    public function detail($id)
+    {
+        $post=Post::find($id);
+        return view('frontend.post_detail',compact('post'));
     }
 }
