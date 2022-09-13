@@ -20,7 +20,7 @@
                             <span class="badge badge-primary">{{$education->education_date}}</span>
                             <h6 class="time-line-item-title">{{$education->university_name}}</h6>
                             <p class="time-line-item-subtitle">{{$education->university_branch}}</p>
-                            <p class="time-line-item-content">{{$education->description}}</p>
+                            <p class="time-line-item-content">{!! $education->description !!}</p>
                         </li>
                         @endforeach
 
