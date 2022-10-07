@@ -9,6 +9,7 @@ Route::get('/resume',[\App\Http\Controllers\FrontController::class,'resume'])->n
 Route::get('/blog',[\App\Http\Controllers\FrontController::class,'blog'])->name('blog');
 Route::get('/blog{id}',[\App\Http\Controllers\FrontController::class,'detail'])->name('blog.detail')->whereNumber('id');
 Route::get('/contact',[\App\Http\Controllers\FrontController::class,'contact'])->name('contact');
+Route::get('/portfolio',[\App\Http\Controllers\FrontController::class,'portfolio'])->name('portfolio');
 Route::post('/contact',[\App\Http\Controllers\FrontController::class,'sendMessage'])->name('sendMessage');
 
 //Back Controller
@@ -58,6 +59,8 @@ Route::prefix('admin')->middleware('auth')->group(function (){
         Route::get('/add',[\App\Http\Controllers\PostController::class,'addShow'])->name('admin.post.add');
         Route::post('/add',[\App\Http\Controllers\PostController::class,'add']);
     });
+
+    Route::resource('portfolio','PortfolioController');
 
 });
 

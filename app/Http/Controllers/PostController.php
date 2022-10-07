@@ -95,6 +95,7 @@ class PostController extends Controller
         }
         else
         {
+
             $posts = new Post();
             $posts->title = $request->title;
             $posts->description = $request->description;

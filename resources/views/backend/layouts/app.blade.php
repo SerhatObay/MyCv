@@ -24,6 +24,16 @@
     <link rel="shortcut icon" href="{{asset('back/assets/images/favicon.png')}}" />
 </head>
 <body>
+<style>
+    .swal2-modal .swal2-title {
+        font-size: 25px;
+        line-height: 1;
+        font-weight: 500;
+        color: #000000;
+        font-weight: initial;
+        margin-bottom: 0;
+    }
+</style>
 <div class="container-scroller">
     <!-- partial:../../partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -141,6 +151,14 @@
                 <i class="mdi mdi-table-large"></i>
               </span>
                     <span class="menu-title">Paylaşımlar</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items {{Route::is('admin.socialMedia.list') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('admin.socialMedia.list')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+                    <span class="menu-title">Portfolio</span>
                 </a>
             </li>
 
@@ -1099,6 +1117,99 @@
 </script>
 
 
+<!-- Portfolio Scripts -->
+
+<script>
+    var about =CKEDITOR.replace('about',{
+        extraAllowedContent: 'div',
+        height:150
+    });
+
+
+    $('#images').change(function (){
+        let images =$(this);
+        let imageCheckStatus =imageCheck(images);
+
+
+    });
+    function  imageCheck(images)
+    {
+        let length =images[0].files.length;
+        let files =images[0].files;
+        let checkImage =['png','jpg','jpeg'];
+
+        for (let i=0; i<length;i++ )
+        {
+            let type =files[i].type.split('/').pop();
+            let size =files[i].size;
+            if($.inArray(type, checkImage)=='-1')
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Uyarı',
+                    text: "Seçilen resimlerden"+files[i].name+"ine sahip resim belirlenen formatlarda değildir",
+                    confirmButtonText:"Tamam",
+
+                });
+                return false;
+
+            }
+            if(size>2048000)
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Uyar',
+                    text: "Seçilen resimlerden"+files[i].name+"ine sahip resim 2mb'den fazla boyuttadır",
+                    confirmButtonText:"Tamam",
+
+                });
+                return false;
+
+            }
+
+        }
+        return true;
+    }
+
+    $('#portfolioCreate').click(function (){
+        let imageCheckStatus =imageCheck($('#images'));
+
+        if(!imageCheckStatus)
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı',
+                text: "Seçtiğiniz Resimleri Kontrol Ediniz",
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else if($('#portfolioTitle').val().trim() == '')
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı',
+                text: "Başlık Alanı Boş Bırakılamaz",
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else if($('#tags').val().trim()=='')
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı',
+                text: "Etiket Alanı Boş Bırakılamaz",
+                confirmButtonText:"Tamam",
+
+            });
+        }
+        else
+        {
+            $('#createPortfolioForm').submit();
+        }
+    });
+</script>
 
 
 <!-- endinject -->

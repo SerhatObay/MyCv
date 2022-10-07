@@ -48,6 +48,9 @@ class FrontController extends Controller
     public function contact(){
         return view('frontend.contact');
     }
+    public function portfolio(){
+        return view('frontend.portfolio');
+    }
 
     public function sendMessage(Request $request)
     {
